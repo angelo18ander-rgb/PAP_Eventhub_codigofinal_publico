@@ -5,11 +5,10 @@
 The browser client uses `http://127.0.0.1:8000/api` when opened on localhost or
 from a local file, preserving the local development setup. On a deployed
 hostname it uses the Render backend configured in `frontend/scripts/core/api.js`.
-The Render Blueprint in `render.yaml` names the service
-`eventhub-api-angelo18ander-rgb`, so its expected API URL is
-`https://eventhub-api-angelo18ander-rgb.onrender.com/api`. Confirm the generated
-URL in the Render dashboard after creating the service; if Render assigns a
-different URL, update the production URL in `frontend/scripts/core/api.js`.
+The deployed API URL is
+`https://pap-eventhub-codigofinal-publico-a9jc.onrender.com/api`. If Render
+assigns a different URL, update the production URL in
+`frontend/scripts/core/api.js`.
 
 To override the URL on a page, set `window.API_BASE_URL` before loading
 `frontend/scripts/core/api.js`:

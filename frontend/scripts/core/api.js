@@ -7,7 +7,7 @@ function defaultApiBaseUrl() {
   const localHosts = new Set(['', 'localhost', '127.0.0.1', '[::1]']);
   return localHosts.has(window.location.hostname)
     ? 'http://127.0.0.1:8000/api'
-    : 'https://eventhub-api-angelo18ander-rgb.onrender.com/api';
+    : 'https://pap-eventhub-codigofinal-publico-a9jc.onrender.com/api';
 }
 
 const API_BASE_URL = (window.API_BASE_URL || defaultApiBaseUrl()).replace(/\/+$/, '');
