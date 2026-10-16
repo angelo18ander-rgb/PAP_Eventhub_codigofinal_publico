@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <base href="../../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas da equipa — EventHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="frontend/styles/core/variables.css">
+  <link rel="stylesheet" href="frontend/styles/core/base.css">
+  <link rel="stylesheet" href="frontend/styles/core/components.css?v=13">
+  <link rel="stylesheet" href="frontend/styles/core/layout.css?v=2">
+  <link rel="stylesheet" href="frontend/staff/staff.css?v=1">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar para o conteúdo principal</a>
+  <div id="navbar-placeholder"></div>
+  <main id="main-content" class="page-main">
+    <section class="page-header">
+      <div class="container">
+        <h1><i class="fa-solid fa-shield-halved"></i> Ferramentas da equipa</h1>
+        <p>Peça acesso a um evento ou abra o leitor de bilhetes de um evento onde foi aprovado.</p>
+      </div>
+    </section>
+    <section class="section staff-events-section">
+      <div class="container">
+        <label class="form-label" for="staff-event-search">Encontrar um evento</label>
+        <input class="form-input staff-search" id="staff-event-search" type="search" placeholder="Pesquise por nome do evento, localização ou organizador">
+        <div id="staff-event-list" class="staff-event-list" aria-live="polite">
+          <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i><p>A carregar eventos…</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-placeholder"></div>
+  <script src="frontend/scripts/core/api.js?v=18"></script>
+  <script src="frontend/scripts/core/db.js?v=13"></script>
+  <script src="frontend/scripts/core/ui.js?v=16"></script>
+  <script src="frontend/scripts/core/auth.js?v=15"></script>
+  <script src="frontend/staff/staff.js?v=1"></script>
+</body>
+</html>

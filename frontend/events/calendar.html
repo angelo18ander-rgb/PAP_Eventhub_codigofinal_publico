@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <base href="../../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário — EventHub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="frontend/styles/core/variables.css">
+  <link rel="stylesheet" href="frontend/styles/core/base.css">
+  <link rel="stylesheet" href="frontend/styles/core/components.css?v=13">
+  <link rel="stylesheet" href="frontend/styles/core/layout.css?v=2">
+  <link rel="stylesheet" href="frontend/events/calendar.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar para o conteúdo principal</a>
+
+  <div id="navbar-placeholder"></div>
+
+  <main id="main-content" class="page-main">
+    <section class="page-header">
+      <div class="container">
+        <h1>Calendário de eventos</h1>
+        <p>Explore eventos por data e não perca os próximos.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:20px;">
+      <div class="container calendar-layout">
+
+        <div class="card calendar-card">
+          <div class="calendar-toolbar">
+            <div class="calendar-nav-group">
+              <button class="btn btn-icon btn-secondary" id="cal-prev-btn" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="calendar-month-selectors">
+                <select id="cal-month-select" class="form-input"></select>
+                <select id="cal-year-select" class="form-input"></select>
+              </div>
+              <button class="btn btn-icon btn-secondary" id="cal-next-btn" aria-label="Mês seguinte"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <button class="btn btn-outline" id="cal-today-btn"><i class="fa-solid fa-calendar-day"></i> Hoje</button>
+          </div>
+
+          <div class="calendar-weekdays">
+            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sób</span>
+          </div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+        </div>
+
+        <aside class="card day-detail-card" id="day-detail-card">
+          <h3 id="day-detail-title">Selecione um dia</h3>
+          <div id="day-detail-events"></div>
+        </aside>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts corrigidos: api.js carregado em primeiro lugar -->
+  <script src="frontend/scripts/core/api.js?v=18"></script>
+  <script src="frontend/scripts/core/db.js?v=13"></script>
+  <script src="frontend/scripts/core/ui.js?v=16"></script>
+  <script src="frontend/scripts/core/auth.js?v=15"></script>
+  <script src="frontend/events/event-card.js?v=7"></script>
+  <script src="frontend/events/calendar.js"></script>
+</body>
+</html>
