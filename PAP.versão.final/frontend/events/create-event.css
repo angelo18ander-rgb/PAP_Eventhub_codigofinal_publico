@@ -1,0 +1,13 @@
+/* ==========================================================================
+   EventHub — Create / Edit Event page styles
+   ========================================================================== */
+
+.form-card { max-width: 720px; margin: 0 auto; padding: 32px; }
+.form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px; }
+
+@media (max-width: 640px) {
+  .form-card { padding: 22px; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column-reverse; }
+  .form-actions .btn { width: 100%; }
+}

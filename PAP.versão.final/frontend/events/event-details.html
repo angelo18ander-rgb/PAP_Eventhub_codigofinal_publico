@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <base href="../../">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do evento — EventHub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="frontend/styles/core/variables.css">
+  <link rel="stylesheet" href="frontend/styles/core/base.css">
+  <link rel="stylesheet" href="frontend/styles/core/components.css?v=13">
+  <link rel="stylesheet" href="frontend/styles/core/layout.css?v=2">
+  <link rel="stylesheet" href="frontend/events/event-details.css?v=13">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar para o conteúdo principal</a>
+
+  <div id="navbar-placeholder"></div>
+
+  <main id="main-content" class="page-main">
+    <div id="event-details-root" class="container" style="padding-top:24px; padding-bottom:60px;">
+      <!-- O conteúdo é apresentado dinamicamente por JavaScript. -->
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts corrigidos: api.js carregado em primeiro lugar -->
+  <script src="frontend/scripts/core/api.js?v=18"></script>
+  <script src="frontend/scripts/core/db.js?v=14"></script>
+  <script src="frontend/scripts/core/ui.js?v=16"></script>
+  <script src="frontend/scripts/core/auth.js?v=15"></script>
+  <script src="frontend/events/event-card.js?v=8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="frontend/events/event-details.js?v=13"></script>
+</body>
+</html>
