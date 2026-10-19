@@ -3,7 +3,7 @@ import json
 from io import BytesIO
 import tempfile
 import unittest
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from uuid import uuid4
 from unittest.mock import patch
 from sqlalchemy import create_engine, inspect, select, text, update
@@ -228,6 +228,62 @@ class ProfileFeatureTests(unittest.TestCase):
         self.assertEqual(error.exception.status_code, 400)
         self.assertEqual(error.exception.detail, "Não é possível inscrever-se num evento cancelado.")
         self.assertNotIn(self.viewer, self.event.participants)
+
+    def test_event_creation_validates_city_from_location(self):
+        self.user.role = "organizer"
+        self.db.commit()
+        event_data = schemas.EventCreate(
+            title="Valid location",
+            description="An event with a valid city in its location.",
+            date=(date.today() + timedelta(days=1)).isoformat(),
+            time="18:00",
+            location="Rua de Teste, Porto, Portugal",
+            category="Music",
+            max_participants=20,
+        )
+
+        with patch("main.require_existing_city") as validate_city:
+            event = main.create_event(event_data, self.user, self.db)
+
+        validate_city.assert_called_once_with("Porto")
+        self.assertEqual(event.location, "Rua de Teste, Porto, Portugal")
+
+    def test_event_creation_and_update_reject_nonexistent_city(self):
+        self.user.role = "organizer"
+        self.event.organizer_id = self.user.id
+        self.db.commit()
+        event_data = schemas.EventCreate(
+            title="Invalid location",
+            description="An event with a city that does not exist.",
+            date=(date.today() + timedelta(days=1)).isoformat(),
+            time="18:00",
+            location="Rua de Teste, Cidade Inventada, Portugal",
+            category="Music",
+            max_participants=20,
+        )
+
+        with patch(
+            "main.require_existing_city",
+            side_effect=HTTPException(status_code=422, detail="Selecione uma cidade válida nas sugestões."),
+        ) as validate_city:
+            with self.assertRaises(HTTPException) as create_error:
+                main.create_event(event_data, self.user, self.db)
+
+        self.assertEqual(create_error.exception.status_code, 422)
+        validate_city.assert_called_once_with("Cidade Inventada")
+        self.assertEqual(self.db.query(models.Event).count(), 1)
+
+        with patch(
+            "main.require_existing_city",
+            side_effect=HTTPException(status_code=422, detail="Selecione uma cidade válida nas sugestões."),
+        ) as validate_city:
+            with self.assertRaises(HTTPException) as update_error:
+                main.update_event(self.event.id, event_data, self.user, self.db)
+
+        self.assertEqual(update_error.exception.status_code, 422)
+        validate_city.assert_called_once_with("Cidade Inventada")
+        self.db.refresh(self.event)
+        self.assertEqual(self.event.location, "Hall, City, Country")
 
     def test_ticket_payload_accepts_ticket_url_and_raw_code(self):
         ticket_code = uuid4().hex

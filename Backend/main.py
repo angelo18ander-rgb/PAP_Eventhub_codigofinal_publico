@@ -1206,6 +1206,7 @@ def create_event(
         raise HTTPException(status_code=403, detail="Selecione o tipo de conta de organizador para criar eventos.")
     if event_data.max_participants <= 0:
         raise HTTPException(status_code=400, detail="O número máximo de participantes deve ser maior que zero.")
+    require_existing_city(event_data.location.split(",")[1].strip())
 
     event = models.Event(**event_data.dict(), organizer_id=current_user.id)
     db.add(event)
@@ -1274,6 +1275,7 @@ def update_event(
         raise HTTPException(status_code=403, detail="Não tens permissão para editar este evento.")
     if event_data.max_participants <= 0:
         raise HTTPException(status_code=400, detail="O número máximo de participantes deve ser maior que zero.")
+    require_existing_city(event_data.location.split(",")[1].strip())
 
     for field, value in event_data.dict().items():
         setattr(event, field, value)
