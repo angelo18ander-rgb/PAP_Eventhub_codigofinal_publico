@@ -442,9 +442,8 @@ const Auth = (() => {
                 </div>
                 <div class="form-error">A palavra-passe deve ter pelo menos 6 caracteres.</div>
               </div>
-              <div class="form-group" style="display:flex; justify-content:space-between; align-items:center;">
+              <div class="form-group">
                 <label class="checkbox-row"><input type="checkbox" id="login-remember"> Manter sessão iniciada</label>
-                <a href="#" style="font-size:0.82rem; color:var(--primary-color); font-weight:600;">Esqueceu-se da palavra-passe?</a>
               </div>
               <div class="alert alert-info" id="login-demo-hint">
                 <i class="fa-solid fa-circle-info"></i>
