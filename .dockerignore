@@ -1,0 +1,4 @@
+.git
+Backend/eventhub.db
+**/__pycache__/
+**/*.py[cod]

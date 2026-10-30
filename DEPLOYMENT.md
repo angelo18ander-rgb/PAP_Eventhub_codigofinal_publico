@@ -4,32 +4,46 @@
 
 The browser client uses `http://127.0.0.1:8000/api` when opened on localhost or
 from a local file, preserving the local development setup. On a deployed
-hostname it uses the Render backend configured in `frontend/scripts/core/api.js`.
-The deployed API URL is
-`https://pap-eventhub-codigofinal-publico-a9jc.onrender.com/api`. If Render
-assigns a different URL, update the production URL in
-`frontend/scripts/core/api.js`.
+hostname it uses the Fly.io backend configured in
+`frontend/scripts/core/api.js`. The default API URL is
+`https://pap-eventhub-codigofinal-publico.fly.dev/api`. If you change the app
+name in `fly.toml`, update this URL to match.
 
 To override the URL on a page, set `window.API_BASE_URL` before loading
 `frontend/scripts/core/api.js`:
 
 ```html
-<script>window.API_BASE_URL = 'https://your-render-service.onrender.com/api';</script>
+<script>window.API_BASE_URL = 'https://your-fly-app.fly.dev/api';</script>
 <script src="frontend/scripts/core/api.js"></script>
 ```
 
-## Deploying the backend to Render
+## Deploying the backend to Fly.io
 
-In Render, create a Blueprint from this repository and use `render.yaml`. It
-deploys the FastAPI app from `Backend/`, installs `Backend/requirements.txt`,
-and starts Uvicorn. The Blueprint sets `EVENTHUB_ENV=production`, generates a
-private `EVENTHUB_SECRET_KEY`, and allows the GitHub Pages origin
-`https://angelo18ander-rgb.github.io`. The origin must not include the project
-path (`/PAP_Eventhub_codigofinal_publico/`).
+The repository includes `fly.toml` and a root `Dockerfile` for deploying the
+FastAPI app. The Fly app name defaults to
+`pap-eventhub-codigofinal-publico`; app names are globally unique, so choose an
+available name and update both `fly.toml` and the frontend API URL if needed.
 
-The service uses Render's free plan for testing. Its local SQLite database is
-ephemeral, so accounts and events may be lost when the service restarts or is
-redeployed. Do not use this free configuration for production data.
+Install and authenticate `flyctl`, then from the repository root:
+
+```text
+fly apps create pap-eventhub-codigofinal-publico
+fly volumes create eventhub_data --region your-machine-region --size 1
+fly secrets set EVENTHUB_SECRET_KEY=YOUR_GENERATED_SECRET
+fly deploy
+```
+
+Replace `your-machine-region` with the app machine's Fly region and
+`YOUR_GENERATED_SECRET` with a unique random secret before running the commands.
+Create the volume in the same region as the app's machine. The app mounts it at
+`/data` and stores SQLite at `/data/eventhub.db`, so data survives deployments
+and machine restarts. This SQLite setup is intended for a single machine; do
+not scale the app to multiple machines, since each Fly volume is local to one
+machine and would result in separate databases. Keep
+`CORS_ALLOWED_ORIGINS` set to the frontend origin
+`https://angelo18ander-rgb.github.io`; it must not include the project path
+(`/PAP_Eventhub_codigofinal_publico/`). `EVENTHUB_SECRET_KEY` is a Fly secret
+and must never be committed to the repository.
 
 ## Project layout
 
@@ -44,10 +58,10 @@ The root `index.html` forwards visitors to the home page in `frontend/home/`.
 
 ## Backend environment
 
-For manual deployments, set `EVENTHUB_ENV=production`, a private
-non-placeholder `EVENTHUB_SECRET_KEY`, and `CORS_ALLOWED_ORIGINS` to the exact
-frontend origin(s), comma-separated and without paths. For this GitHub Pages
-site:
+For deployments outside the provided Fly.io configuration, set
+`EVENTHUB_ENV=production`, a private non-placeholder `EVENTHUB_SECRET_KEY`,
+and `CORS_ALLOWED_ORIGINS` to the exact frontend origin(s), comma-separated and
+without paths. For this GitHub Pages site:
 
 ```text
 EVENTHUB_ENV=production
