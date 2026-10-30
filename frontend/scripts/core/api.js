@@ -3,11 +3,11 @@
    ========================================================================== */
 
 function defaultApiBaseUrl() {
-  // Escolhe API local em desenvolvimento e o serviço Render no GitHub Pages.
+  // Escolhe API local em desenvolvimento e o serviço Fly.io em produção.
   const localHosts = new Set(['', 'localhost', '127.0.0.1', '[::1]']);
   return localHosts.has(window.location.hostname)
     ? 'http://127.0.0.1:8000/api'
-    : 'https://pap-eventhub-codigofinal-publico-a9jc.onrender.com/api';
+    : 'https://pap-eventhub-codigofinal-publico.fly.dev/api';
 }
 
 const API_BASE_URL = (window.API_BASE_URL || defaultApiBaseUrl()).replace(/\/+$/, '');
